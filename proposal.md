@@ -1,7 +1,7 @@
 # Flappy Gimble
 
 ## Repository
-Link to respository: [Click here](https://github.com/CrazhArt/flappy-gimble/tree/main]
+Link to respository: [Click here(https://github.com/CrazhArt/flappy-gimble/tree/main)]
 
 ## Description
 A simple game that utilizes simple physics and event mechanics.
