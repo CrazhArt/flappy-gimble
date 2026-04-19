@@ -1,6 +1,6 @@
 """
 Simple python survival game
-Run: python flappy_gimble.py
+Run: python project.py
 """
 
 import pygame
@@ -23,6 +23,7 @@ def main():
 
     screen = pygame.display.set_mode((screen_width, screen_height))
     clock = pygame.time.Clock()
+    dt = 0
 
     score = 0
 
@@ -31,7 +32,9 @@ def main():
         bg = pygame.image.load("Assets/defaultBG.png")
         screen.blit(bg, (0,0))
 
-        pygame.flip
+        pygame.display.flip
+
+        dt = clock.tick(60)
     pygame.quit()
 
 if __name__ == "__main__":
