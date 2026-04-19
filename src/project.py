@@ -21,5 +21,10 @@ def main():
     screen = pygame.display.set_mode((canvasw, canvash))
     clock = pygame.time.Clock()
 
+    bg = pygame.image.load("Assets/defaultBG.png")
+    screen.blit(bg, (0,0))
+
+    pygame.flip
+
 if __name__ == "__main__":
     main()
