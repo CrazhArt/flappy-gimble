@@ -9,8 +9,11 @@ import random
 
 # --- Constants -----------------------------------------------------------------
 
-canvasw = 1920
-canvash = 1080
+screen_width = 1920
+screen_height = 1080
+
+character_width = 100
+character_height = 100
 
 # --- Main ----------------------------------------------------------------------
 
@@ -18,13 +21,18 @@ def main():
     pygame.init()
     pygame.display.set_caption("Flappy Gimble")
 
-    screen = pygame.display.set_mode((canvasw, canvash))
+    screen = pygame.display.set_mode((screen_width, screen_height))
     clock = pygame.time.Clock()
 
-    bg = pygame.image.load("Assets/defaultBG.png")
-    screen.blit(bg, (0,0))
+    score = 0
 
-    pygame.flip
+    running = True
+    while running:
+        bg = pygame.image.load("Assets/defaultBG.png")
+        screen.blit(bg, (0,0))
+
+        pygame.flip
+    pygame.quit()
 
 if __name__ == "__main__":
     main()
