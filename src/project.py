@@ -15,6 +15,15 @@ screen_height = 1080
 character_width = 100
 character_height = 100
 
+# --- Classes -------------------------------------------------------------------
+
+class Gimble():
+    def __init__(self, pos, size):
+
+class Pipe():
+    def __init__(self, pos):
+
+
 # --- Main ----------------------------------------------------------------------
 
 def main():
@@ -31,6 +40,8 @@ def main():
     while running:
         bg = pygame.image.load("Assets/defaultBG.png")
         screen.blit(bg, (0,0))
+        fg = pygame.image.load("Assets/defaultFG.png")
+        screen.blit(fg, )
 
         pygame.display.flip
 
