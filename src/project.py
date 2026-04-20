@@ -19,10 +19,28 @@ character_height = 100
 
 class Gimble(pygame.sprite.Sprite):
     def __init__(self):
+        super().__init__()
+
+        self.image_list = []
+        self.index = 0
+        self.counter = 0
+
         for i in range(1, 4):
-            self.gim_sprite = pygame.image.load(f"Assets/Player/defaultCHAR{i}.png")
-        self.image = self.gim_sprite
-        self.rect = self.gim_sprite.get_rect(center=(screen_width//4,screen_height//2))
+            image = pygame.image.load(f"Assets/Player/defaultCHAR{i}.png")
+            self.image_list.append(image)
+        self.image = self.image_list[self.index]
+        self.rect = self.image.get_rect()
+        self.rect.center = [screen_width//4, screen_height//2]
+
+    def update(self):
+        self.counter += 1
+        animCooldown = 5
+        if self.counter > animCooldown:
+            self.counter = 0
+            self.index += 1
+            if self.index >= len(self.image_list):
+                self.index = 0
+        self.image = self.image_list[self.index]
 
 # class Pipe():
 #     def __init__(self, pos):
@@ -38,6 +56,9 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
 
+    player = pygame.sprite.GroupSingle()
+    player.add(Gimble())
+
     score = 0
 
     running = True
@@ -48,6 +69,8 @@ def main():
 
         bg = pygame.image.load("Assets/defaultBG.png")
         screen.blit(bg, (0,0))
+        player.draw(screen)
+        player.update()
 
         pygame.display.flip()
 
