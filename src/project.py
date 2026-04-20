@@ -38,6 +38,10 @@ def main():
 
     running = True
     while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
         bg = pygame.image.load("Assets/defaultBG.png")
         screen.blit(bg, (0,0))
         fg = pygame.image.load("Assets/defaultFG.png")
