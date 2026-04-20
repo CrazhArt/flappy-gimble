@@ -17,8 +17,12 @@ character_height = 100
 
 # --- Classes -------------------------------------------------------------------
 
-# class Gimble():
-#     def __init__(self, pos, size):
+class Gimble(pygame.sprite.Sprite):
+    def __init__(self):
+
+        self.gim_sprite = pygame.image.load("Assets/defaultCHAR.png")
+        self.image = self.gim_sprite
+        self.rect = self.gim_sprite.get_rect(center=(screen_width//4,screen_height//2))
 
 # class Pipe():
 #     def __init__(self, pos):
@@ -45,7 +49,7 @@ def main():
         bg = pygame.image.load("Assets/defaultBG.png")
         screen.blit(bg, (0,0))
 
-        pygame.display.flip
+        pygame.display.flip()
 
         dt = clock.tick(60)
     pygame.quit()
