@@ -19,8 +19,8 @@ character_height = 100
 
 class Gimble(pygame.sprite.Sprite):
     def __init__(self):
-
-        self.gim_sprite = pygame.image.load("Assets/defaultCHAR.png")
+        for i in range(1, 4):
+            self.gim_sprite = pygame.image.load(f"Assets/Player/defaultCHAR{i}.png")
         self.image = self.gim_sprite
         self.rect = self.gim_sprite.get_rect(center=(screen_width//4,screen_height//2))
 
