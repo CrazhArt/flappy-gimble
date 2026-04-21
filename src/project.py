@@ -16,6 +16,9 @@ FPS = 60
 GAP = 200
 SPAWN_INTERVAL = 1450 # Interval in milliseconds
 
+baseScroll = 0
+scrollSpeed = 20
+
 flying = False
 gameOver = False
 
@@ -77,7 +80,25 @@ playerGroup.add(player)
 
 
 class Leaves():
-    def __init__(self, pos):
+    def __init__(self, x_coord, y_coord, pos):
+        super().__init__()
+
+        self.image = pygame.image.load('Assets/defaultPIPE.png')
+        self.rect = self.image.get_rect()
+
+        if pos == 1:
+            self.image = pygame.transform.flip(self.image, False, True)
+            self.rect.bottomleft = [x_coord, y_coord - int(GAP/2)]
+        if pos == -1:
+            self.rect.topleft = [x_coord, y_coord + int(GAP/2)]
+
+    def update(self):
+        self.rect.x -= scrollSpeed
+
+        if self.rect.right < 0:
+            self.kill()
+
+leafGroup = pygame.sprite.Group()
 
 
 # --- Main ----------------------------------------------------------------------
@@ -89,8 +110,6 @@ def main():
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
-    baseScroll = 0
-    scrollSpeed = 20
     lastLeaf = pygame.time.get_ticks() - SPAWN_INTERVAL
 
     running = True
