@@ -55,17 +55,18 @@ class Gimble(pygame.sprite.Sprite):
             if pygame.mouse.get_pressed()[0] == 0:
                 self.pressed = False
 
-        self.counter += 1
-        animCooldown = 3
-        if self.counter > animCooldown:
-            self.counter = 0
-            self.index += 1
-            if self.index >= len(self.sprite_frames):
-                self.index = 0
-        self.image = self.sprite_frames[self.index]
+            self.counter += 1
+            animCooldown = 3
+            if self.counter > animCooldown:
+                self.counter = 0
+                self.index += 1
+                if self.index >= len(self.sprite_frames):
+                    self.index = 0
+            self.image = self.sprite_frames[self.index]
 
-        self.image = pygame.transform.rotate(self.sprite_frames[self.index], self.velocity * 2)
-        self.image = pygame.transform.rotate(self.sprite_frames[self.index], -90)
+            self.image = pygame.transform.rotate(self.sprite_frames[self.index], self.velocity * 2)
+        else:
+            self.image = pygame.transform.rotate(self.sprite_frames[self.index], -90)
 
 playerGroup = pygame.sprite.Group()
 player = Gimble(int(SCREEN_WIDTH/4), int(SCREEN_HEIGHT/2))
