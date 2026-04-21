@@ -19,8 +19,30 @@ FPS = 60
 # --- Classes -------------------------------------------------------------------
 
 class Gimble(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, x, y):
         super().__init__()
+        # pygame.sprite.Sprite.__init__(self)
+
+        self.sprite_frames = []
+        self.index = 0
+        self.counter = 0
+
+        for i in range(1,4):
+            image = pygame.image.load(f"Assets/Player/defaultCHAR{i}.png")
+            self.sprite_frames.append(image)
+        self.image = self.sprite_frames[self.index]
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+
+    def update(self):
+        self.counter += 1
+        animCooldown = 3
+        if self.counter > animCooldown:
+            self.counter = 0
+            self.index += 1
+            if self.index >= len(self.sprite_frames):
+                self.index = 0
+        self.image = self.sprite_frames[self.index]
 
 # class Pipe():
 #     def __init__(self, pos):
@@ -36,6 +58,10 @@ def main():
     baseScroll = 0
     scrollSpeed = 20
 
+    playerGroup = pygame.sprite.Group()
+    player = Gimble(200, int(SCREEN_HEIGHT))
+    playerGroup.add(player)
+
     running = True
     while running:
         for event in pygame.event.get():
@@ -49,6 +75,7 @@ def main():
         baseScroll -= scrollSpeed
         if abs(baseScroll) > 70:
             baseScroll = 0
+
         pygame.display.update()
 
         pygame.display.flip()
