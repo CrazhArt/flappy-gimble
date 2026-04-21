@@ -13,6 +13,9 @@ SCREEN_WIDTH = 1920
 SCREEN_HEIGHT = 1080
 FPS = 60
 
+flying = False
+gameOver = False
+
 # --- Custom Functions ----------------------------------------------------------
 
 
@@ -26,6 +29,8 @@ class Gimble(pygame.sprite.Sprite):
         self.sprite_frames = []
         self.index = 0
         self.counter = 0
+        self.velocity = 0
+        self.pressed = False
 
         for i in range(1,4):
             image = pygame.image.load(f"Assets/Player/defaultCHAR{i}.png")
@@ -35,6 +40,20 @@ class Gimble(pygame.sprite.Sprite):
         self.rect.center = (x, y)
 
     def update(self):
+        if flying == True:
+            self.velocity += 0.5
+            if self.velocity > 8.5:
+                self.velocity = 8.5
+            if self.rect.bottom < (SCREEN_WIDTH - 250):
+                self.rect.y += int(self.velocity)
+
+        if gameOver == False:
+            if pygame.mouse.get_pressed()[0] == 1 and self.pressed == False:
+                self.pressed = True
+                self.velocity = -10
+            if pygame.mouse.get_pressed()[0] == 0:
+                self.pressed = False
+
         self.counter += 1
         animCooldown = 3
         if self.counter > animCooldown:
@@ -43,6 +62,9 @@ class Gimble(pygame.sprite.Sprite):
             if self.index >= len(self.sprite_frames):
                 self.index = 0
         self.image = self.sprite_frames[self.index]
+
+        self.image = pygame.transform.rotate(self.sprite_frames[self.index], self.velocity * 2)
+        self.image = pygame.transform.rotate(self.sprite_frames[self.index], -90)
 
 # class Pipe():
 #     def __init__(self, pos):
@@ -59,7 +81,7 @@ def main():
     scrollSpeed = 20
 
     playerGroup = pygame.sprite.Group()
-    player = Gimble(200, int(SCREEN_HEIGHT))
+    player = Gimble(200, int(SCREEN_HEIGHT/2))
     playerGroup.add(player)
 
     running = True
