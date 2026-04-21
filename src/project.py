@@ -12,6 +12,7 @@ import random
 SCREEN_WIDTH = 1920
 SCREEN_HEIGHT = 1080
 FPS = 60
+SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 GAP = 200
 SPAWN_INTERVAL = 1450 # Interval in milliseconds
@@ -22,7 +23,17 @@ scrollSpeed = 20
 flying = False
 gameOver = False
 
+font = pygame.font.SysFont("xolonium regular", 75)
+black = (0, 0 ,0)
+score = 0
+passPile = False
+
 # --- Custom Functions ----------------------------------------------------------
+
+
+def drawText(text, font, color, x_coord, y_coord):
+    image = font.render(text, True, color)
+    SCREEN.blit(image, (x_coord, y_coord))
 
 
 # --- Classes -------------------------------------------------------------------
@@ -107,8 +118,6 @@ leafGroup = pygame.sprite.Group()
 def main():
     pygame.init()
     pygame.display.set_caption("Flappy Gimble")
-
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
     lastLeaf = pygame.time.get_ticks() - SPAWN_INTERVAL
 
@@ -123,13 +132,13 @@ def main():
                 flying = True
 
         bg = pygame.image.load("Assets/defaultBG.png")
-        screen.blit(bg, (0,0))
-        playerGroup.draw(screen)
+        SCREEN.blit(bg, (0,0))
+        playerGroup.draw(SCREEN)
         playerGroup.update()
-        leafGroup.draw(screen)
+        leafGroup.draw(SCREEN)
         leafGroup.update()
         fg = pygame.image.load("Assets/defaultFG.png")
-        screen.blit(fg, (baseScroll, (SCREEN_HEIGHT - 250)))
+        SCREEN.blit(fg, (baseScroll, (SCREEN_HEIGHT - 250)))
 
         if pygame.sprite.groupcollide(playerGroup, leafGroup, False, False) or player.rect.top < 0:
             gameOver = True
