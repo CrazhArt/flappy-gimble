@@ -21,8 +21,9 @@ gameOver = False
 
 # --- Classes -------------------------------------------------------------------
 
+
 class Gimble(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, x_coord, y_coord):
         super().__init__()
         # pygame.sprite.Sprite.__init__(self)
 
@@ -37,7 +38,7 @@ class Gimble(pygame.sprite.Sprite):
             self.sprite_frames.append(image)
         self.image = self.sprite_frames[self.index]
         self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
+        self.rect.center = (x_coord, y_coord)
 
     def update(self):
         if flying == True:
@@ -66,10 +67,17 @@ class Gimble(pygame.sprite.Sprite):
         self.image = pygame.transform.rotate(self.sprite_frames[self.index], self.velocity * 2)
         self.image = pygame.transform.rotate(self.sprite_frames[self.index], -90)
 
+playerGroup = pygame.sprite.Group()
+player = Gimble(int(SCREEN_WIDTH/4), int(SCREEN_HEIGHT/2))
+playerGroup.add(player)
+
+
 # class Pipe():
 #     def __init__(self, pos):
 
+
 # --- Main ----------------------------------------------------------------------
+
 
 def main():
     pygame.init()
@@ -79,10 +87,6 @@ def main():
     clock = pygame.time.Clock()
     baseScroll = 0
     scrollSpeed = 20
-
-    playerGroup = pygame.sprite.Group()
-    player = Gimble(200, int(SCREEN_HEIGHT/2))
-    playerGroup.add(player)
 
     running = True
     while running:
