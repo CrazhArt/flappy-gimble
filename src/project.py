@@ -24,8 +24,6 @@ gameOver = False
 
 black = (0, 0 ,0)
 
-passPile = False
-
 # --- Custom Functions ----------------------------------------------------------
 
 
@@ -87,7 +85,7 @@ player = Gimble(int(SCREEN_WIDTH/4), int(SCREEN_HEIGHT/2))
 playerGroup.add(player)
 
 
-class Leaves():
+class Leaves(pygame.sprite.Sprite):
     def __init__(self, x_coord, y_coord, pos):
         super().__init__()
 
@@ -122,6 +120,10 @@ def main():
     score = 0
 
     running = True
+    flying = False
+    gameOver = False
+    passPile = False
+
     while running:
         clock.tick(FPS)
 
@@ -160,14 +162,14 @@ def main():
 
         if gameOver == False and flying == True:
             timeNow = pygame.time.get_ticks()
-            if timeNow > lastLeaf:
+            if timeNow - lastLeaf > SPAWN_INTERVAL:
                 leafHeight = random.randint(-100, 100)
                 bottomLeaf = Leaves(SCREEN_WIDTH, int(SCREEN_HEIGHT/2) + leafHeight, -1)
                 topLeaf = Leaves(SCREEN_WIDTH, int(SCREEN_HEIGHT/2) + leafHeight, 1)
                 leafGroup.add(bottomLeaf)
                 leafGroup.add(topLeaf)
                 lastLeaf = timeNow
-                
+
             baseScroll -= scrollSpeed
             if abs(baseScroll) > 70:
                 baseScroll = 0
