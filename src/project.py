@@ -13,6 +13,9 @@ SCREEN_WIDTH = 1920
 SCREEN_HEIGHT = 1080
 FPS = 60
 
+GAP = 200
+SPAWN_INTERVAL = 1450 # Interval in milliseconds
+
 flying = False
 gameOver = False
 
@@ -73,8 +76,8 @@ player = Gimble(int(SCREEN_WIDTH/4), int(SCREEN_HEIGHT/2))
 playerGroup.add(player)
 
 
-# class Pipe():
-#     def __init__(self, pos):
+class Leaves():
+    def __init__(self, pos):
 
 
 # --- Main ----------------------------------------------------------------------
@@ -88,6 +91,7 @@ def main():
     clock = pygame.time.Clock()
     baseScroll = 0
     scrollSpeed = 20
+    lastLeaf = pygame.time.get_ticks() - SPAWN_INTERVAL
 
     running = True
     while running:
