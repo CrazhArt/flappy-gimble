@@ -17,22 +17,20 @@ SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 GAP = 200
 SPAWN_INTERVAL = 1450 # Interval in milliseconds
 
-baseScroll = 0
 scrollSpeed = 20
 
 flying = False
 gameOver = False
 
-font = pygame.font.SysFont("xolonium regular", 75)
 black = (0, 0 ,0)
-score = 0
+
 passPile = False
 
 # --- Custom Functions ----------------------------------------------------------
 
 
-def drawText(text, font, color, x_coord, y_coord):
-    image = font.render(text, True, color)
+def drawText(text, typeface, color, x_coord, y_coord):
+    image = typeface.render(text, True, color)
     SCREEN.blit(image, (x_coord, y_coord))
 
 
@@ -42,7 +40,6 @@ def drawText(text, font, color, x_coord, y_coord):
 class Gimble(pygame.sprite.Sprite):
     def __init__(self, x_coord, y_coord):
         super().__init__()
-        # pygame.sprite.Sprite.__init__(self)
 
         self.sprite_frames = []
         self.index = 0
@@ -120,6 +117,9 @@ def main():
     pygame.display.set_caption("Flappy Gimble")
     clock = pygame.time.Clock()
     lastLeaf = pygame.time.get_ticks() - SPAWN_INTERVAL
+    typeface = pygame.font.SysFont("xolonium", 75)
+    baseScroll = 0
+    score = 0
 
     running = True
     while running:
@@ -139,6 +139,17 @@ def main():
         leafGroup.update()
         fg = pygame.image.load("Assets/defaultFG.png")
         SCREEN.blit(fg, (baseScroll, (SCREEN_HEIGHT - 250)))
+        drawText(str(score), typeface, black, int(SCREEN_WIDTH/2), 25)
+
+        if len(leafGroup) > 0:
+            if playerGroup.sprites()[0].rect.left > leafGroup.sprites()[0].rect.left\
+                and playerGroup.sprites()[0].rect.left < leafGroup.sprites()[0].rect.right\
+                    and passPile == False:
+                    passPile = True
+            if passPile == True:
+                if playerGroup.sprites()[0].rect.left > leafGroup.sprites()[0].rect.right:
+                    score += 1
+                    passPile = False
 
         if pygame.sprite.groupcollide(playerGroup, leafGroup, False, False) or player.rect.top < 0:
             gameOver = True
