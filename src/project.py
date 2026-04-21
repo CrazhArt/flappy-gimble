@@ -126,17 +126,33 @@ def main():
         screen.blit(bg, (0,0))
         playerGroup.draw(screen)
         playerGroup.update()
+        leafGroup.draw(screen)
+        leafGroup.update()
         fg = pygame.image.load("Assets/defaultFG.png")
         screen.blit(fg, (baseScroll, (SCREEN_HEIGHT - 250)))
+
+        if pygame.sprite.groupcollide(playerGroup, leafGroup, False, False) or player.rect.top < 0:
+            gameOver = True
 
         if player.rect.bottom > (SCREEN_HEIGHT - 250):
             gameOver = True
             flying = False
 
-        if gameOver == False:
+        if gameOver == False and flying == True:
+            timeNow = pygame.time.get_ticks()
+            if timeNow > lastLeaf:
+                leafHeight = random.randint(-100, 100)
+                bottomLeaf = Leaves(SCREEN_WIDTH, int(SCREEN_HEIGHT/2) + leafHeight, -1)
+                topLeaf = Leaves(SCREEN_WIDTH, int(SCREEN_HEIGHT/2) + leafHeight, 1)
+                leafGroup.add(bottomLeaf)
+                leafGroup.add(topLeaf)
+                lastLeaf = timeNow
+                
             baseScroll -= scrollSpeed
             if abs(baseScroll) > 70:
                 baseScroll = 0
+
+            leafGroup.update()
 
         pygame.display.update()
 
