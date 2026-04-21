@@ -33,7 +33,7 @@ class Gimble(pygame.sprite.Sprite):
         self.velocity = 0
         self.pressed = False
 
-        for i in range(1,4):
+        for i in range(1,5):
             image = pygame.image.load(f"Assets/Player/defaultCHAR{i}.png")
             self.sprite_frames.append(image)
         self.image = self.sprite_frames[self.index]
@@ -56,7 +56,7 @@ class Gimble(pygame.sprite.Sprite):
                 self.pressed = False
 
             self.counter += 1
-            animCooldown = 3
+            animCooldown = 1
             if self.counter > animCooldown:
                 self.counter = 0
                 self.index += 1
@@ -91,17 +91,29 @@ def main():
 
     running = True
     while running:
+        clock.tick(FPS)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.MOUSEBUTTONDOWN and flying == False and gameOver == False:
+                flying = True
 
         bg = pygame.image.load("Assets/defaultBG.png")
         screen.blit(bg, (0,0))
+        playerGroup.draw(screen)
+        playerGroup.update()
         fg = pygame.image.load("Assets/defaultFG.png")
         screen.blit(fg, (baseScroll, (SCREEN_HEIGHT - 250)))
-        baseScroll -= scrollSpeed
-        if abs(baseScroll) > 70:
-            baseScroll = 0
+
+        if player.rect.bottom > (SCREEN_HEIGHT - 250):
+            gameOver = True
+            flying = False
+
+        if gameOver == False:
+            baseScroll -= scrollSpeed
+            if abs(baseScroll) > 70:
+                baseScroll = 0
 
         pygame.display.update()
 
