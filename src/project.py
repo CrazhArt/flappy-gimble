@@ -44,7 +44,7 @@ class Gimble(pygame.sprite.Sprite):
             self.velocity += 0.5
             if self.velocity > 8.5:
                 self.velocity = 8.5
-            if self.rect.bottom < (SCREEN_WIDTH - 250):
+            if self.rect.bottom < (SCREEN_HEIGHT - 250):
                 self.rect.y += int(self.velocity)
 
         if gameOver == False:
