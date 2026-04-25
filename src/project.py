@@ -14,10 +14,10 @@ SCREEN_HEIGHT = 1080
 FPS = 60
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-GAP = 200
-SPAWN_INTERVAL = 1450 # Interval in milliseconds
+GAP = 300
+SPAWN_INTERVAL = 2250 # Interval in milliseconds
 
-scrollSpeed = 20
+scrollSpeed = 15
 
 flying = False
 gameOver = False
@@ -116,6 +116,7 @@ def main():
     clock = pygame.time.Clock()
     lastLeaf = pygame.time.get_ticks() - SPAWN_INTERVAL
     typeface = pygame.font.SysFont("xolonium", 75)
+    button = pygame.image.load("Assets/defaultRESTART.png")
     baseScroll = 0
     score = 0
 
@@ -135,12 +136,16 @@ def main():
 
         bg = pygame.image.load("Assets/defaultBG.png")
         SCREEN.blit(bg, (0,0))
+
         playerGroup.draw(SCREEN)
         playerGroup.update()
+
         leafGroup.draw(SCREEN)
         leafGroup.update()
+
         fg = pygame.image.load("Assets/defaultFG.png")
         SCREEN.blit(fg, (baseScroll, (SCREEN_HEIGHT - 250)))
+
         drawText(str(score), typeface, black, int(SCREEN_WIDTH/2), 25)
 
         if len(leafGroup) > 0:
