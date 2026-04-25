@@ -17,7 +17,7 @@ SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 GAP = 300
 SPAWN_INTERVAL = 2250 # Interval in milliseconds
 
-scrollSpeed = 15
+scrollSpeed = 20
 
 flying = False
 gameOver = False
@@ -121,7 +121,7 @@ class Button():
     def __init__(self, x_coord, y_coord, image):
         self.image = image
         self.rect = self.image.get_rect()
-        self.rect.topleft(x_coord, y_coord)
+        self.rect.topleft = (x_coord, y_coord)
 
     def draw(self):
         action = False
@@ -146,7 +146,7 @@ def main():
     lastLeaf = pygame.time.get_ticks() - SPAWN_INTERVAL
     typeface = pygame.font.SysFont("xolonium", 75)
     button = pygame.image.load("Assets/defaultRESTART.png")
-    restartButton = Button(150, 100, button)
+    restartButton = Button((SCREEN_WIDTH/2) - 150, 150, button)
     baseScroll = 0
     score = 0
 
@@ -176,7 +176,7 @@ def main():
         fg = pygame.image.load("Assets/defaultFG.png")
         SCREEN.blit(fg, (baseScroll, (SCREEN_HEIGHT - 250)))
 
-        drawText(str(score), typeface, black, int(SCREEN_WIDTH/2), 25)
+        drawText(str(score), typeface, black, int(SCREEN_WIDTH/2) - 25, 25)
 
         if len(leafGroup) > 0:
             if playerGroup.sprites()[0].rect.left > leafGroup.sprites()[0].rect.left\
@@ -208,6 +208,11 @@ def main():
             baseScroll -= scrollSpeed
             if abs(baseScroll) > 70:
                 baseScroll = 0
+
+        if gameOver == True:
+            if restartButton.draw() == True:
+                gameOver = False
+                score = resetGame()
 
             leafGroup.update()
 
