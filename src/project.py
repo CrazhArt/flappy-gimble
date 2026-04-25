@@ -31,6 +31,16 @@ def drawText(text, typeface, color, x_coord, y_coord):
     image = typeface.render(text, True, color)
     SCREEN.blit(image, (x_coord, y_coord))
 
+def resetGame():
+    leafGroup.empty()
+
+    player.rect.x = 200
+    player.rect.y = int(SCREEN_HEIGHT - 250)
+
+    playerScore = 0
+
+    return playerScore
+
 
 # --- Classes -------------------------------------------------------------------
 
