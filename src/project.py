@@ -107,6 +107,25 @@ class Leaves(pygame.sprite.Sprite):
 leafGroup = pygame.sprite.Group()
 
 
+class Button():
+    def __init__(self, x_coord, y_coord, image):
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.rect.topleft(x_coord, y_coord)
+
+    def draw(self):
+        action = False
+
+        pos = pygame.mouse.get_pos()
+        if self.rect.collidepoint(pos):
+            if pygame.mouse.get_pressed()[0] == 1:
+                action = True
+
+        SCREEN.blit(self.image, (self.rect.x, self.rect.y))
+
+        return action
+
+
 # --- Main ----------------------------------------------------------------------
 
 
@@ -117,6 +136,7 @@ def main():
     lastLeaf = pygame.time.get_ticks() - SPAWN_INTERVAL
     typeface = pygame.font.SysFont("xolonium", 75)
     button = pygame.image.load("Assets/defaultRESTART.png")
+    restartButton = Button(150, 100, button)
     baseScroll = 0
     score = 0
 
