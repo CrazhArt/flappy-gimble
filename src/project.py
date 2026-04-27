@@ -28,12 +28,9 @@ def drawText(text, typeface, color, x_coord, y_coord):
 
 def resetGame():
     leafGroup.empty()
-
     player.rect.x = 200
-    player.rect.y = int(SCREEN_HEIGHT - 250)
-
+    player.rect.y = int(SCREEN_HEIGHT / 2)
     playerScore = 0
-
     return playerScore
 
 
@@ -53,7 +50,7 @@ class Gimble(pygame.sprite.Sprite):
             self.sprite_frames.append(image)
         self.image = self.sprite_frames[self.index]
         self.rect = self.image.get_rect()
-        self.rect.center = (x_coord, y_coord)
+        self.rect.center = [x_coord, y_coord]
 
         self.velocity = 0
         self.pressed = False
