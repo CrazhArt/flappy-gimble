@@ -65,7 +65,7 @@ class Gimble(pygame.sprite.Sprite):
             if self.velocity > 20:
                 self.velocity = 20
             # Minimum height to maintain before death
-            if self.rect.bottom < (SCREEN_HEIGHT - 250):
+            if self.rect.bottom < (SCREEN_HEIGHT - 200):
                 self.rect.y += int(self.velocity)
 
         # Click to jump mechanic
@@ -100,7 +100,7 @@ class Leaves(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         # Draws image on screen
-        self.image = pygame.image.load('Assets/defaultPIPE.png')
+        self.image = pygame.image.load('Assets/Stalagmite.png')
         self.rect = self.image.get_rect()
 
         # Defines upper and lower pipes w/ gap
@@ -152,9 +152,9 @@ pygame.display.set_caption("Flappy Gimble")
 clock = pygame.time.Clock()
 black = (0, 0 ,0)
 typeface = pygame.font.SysFont("xolonium", 75)
-bg = pygame.image.load("Assets/defaultBG.png")
-fg = pygame.image.load("Assets/defaultFG.png")
-button = pygame.image.load("Assets/defaultRESTART.png")
+bg = pygame.image.load("Assets/Background.png")
+fg = pygame.image.load("Assets/Foreground.png")
+button = pygame.image.load("Assets/Restart.png")
 
 # Default settings
 baseScroll = 0
@@ -170,7 +170,7 @@ leafGroup = pygame.sprite.Group()
 lastLeaf = pygame.time.get_ticks() - SPAWN_INTERVAL
 player = Gimble(int(SCREEN_WIDTH/4), int(SCREEN_HEIGHT/2))
 playerGroup.add(player)
-restartButton = Button((SCREEN_WIDTH/2) - 150, 150, button)
+restartButton = Button((SCREEN_WIDTH/2) - 250, 125, button)
 
 running = True
 
@@ -187,7 +187,7 @@ while running:
     leafGroup.draw(SCREEN)
 
     # Scrolls ground
-    SCREEN.blit(fg, (baseScroll, (SCREEN_HEIGHT - 250)))
+    SCREEN.blit(fg, (baseScroll, (SCREEN_HEIGHT - 200)))
 
     # Checks if player sprite passes through obstacles
     if len(leafGroup) > 0:
@@ -207,7 +207,7 @@ while running:
         gameOver = True
 
     # Checks if player collides w/ ground
-    if player.rect.bottom > (SCREEN_HEIGHT - 250):
+    if player.rect.bottom > (SCREEN_HEIGHT - 200):
         gameOver = True
         flying = False
 
@@ -215,7 +215,7 @@ while running:
     if gameOver == False and flying == True:
         timeNow = pygame.time.get_ticks()
         if timeNow - lastLeaf > SPAWN_INTERVAL:
-            leafHeight = random.randint(-300, 100)
+            leafHeight = random.randint(-350, 150)
             bottomLeaf = Leaves(SCREEN_WIDTH, int(SCREEN_HEIGHT/2) + leafHeight, -1)
             topLeaf = Leaves(SCREEN_WIDTH, int(SCREEN_HEIGHT/2) + leafHeight, 1)
             leafGroup.add(bottomLeaf)
@@ -224,7 +224,7 @@ while running:
 
         # Scrolls ground while running
         baseScroll -= scrollSpeed
-        if abs(baseScroll) > 70:
+        if abs(baseScroll) > 1920:
             baseScroll = 0
 
         leafGroup.update()
