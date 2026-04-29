@@ -47,8 +47,8 @@ class Gimble(pygame.sprite.Sprite):
         self.counter = 0
 
         # Scrolls through & animates frames
-        for i in range(1,5):
-            image = pygame.image.load(f"Assets/Player/defaultCHAR{i}.png")
+        for i in range(1,7):
+            image = pygame.image.load(f"Assets/Player/gimble_fly{i}.png")
             self.sprite_frames.append(image)
         self.image = self.sprite_frames[self.index]
         self.rect = self.image.get_rect()
@@ -150,8 +150,8 @@ class Button():
 pygame.init()
 pygame.display.set_caption("Flappy Gimble")
 clock = pygame.time.Clock()
-black = (0, 0 ,0)
-typeface = pygame.font.SysFont("xolonium", 75)
+color = (210, 146, 71)
+typeface = pygame.font.SysFont("chilling sabrina", 80)
 bg = pygame.image.load("Assets/Background.png")
 fg = pygame.image.load("Assets/Foreground.png")
 button = pygame.image.load("Assets/Restart.png")
@@ -200,7 +200,7 @@ while running:
                 score += 1
                 passPile = False
 
-    drawText(str(score), typeface, black, int(SCREEN_WIDTH/2) - 25, 25)
+    drawText(str(score), typeface, color, int(SCREEN_WIDTH/2) - 25, 25)
 
     # Checks if player and obstacles collide
     if pygame.sprite.groupcollide(playerGroup, leafGroup, False, False) or player.rect.top < 0:
