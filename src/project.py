@@ -26,7 +26,7 @@ def drawText(text, typeface, color, x_coord, y_coord):
 
 # Restarts the game after a gameover; resets player location and score
 def resetGame():
-    leafGroup.empty()
+    rockGroup.empty()
     player.rect.x = 200
     player.rect.y = int(SCREEN_HEIGHT / 2)
     playerScore = 0
@@ -95,7 +95,7 @@ class Gimble(pygame.sprite.Sprite):
 
 
 # Main obstacle class
-class Leaves(pygame.sprite.Sprite):
+class Stalagmites(pygame.sprite.Sprite):
     def __init__(self, x_coord, y_coord, pos):
         pygame.sprite.Sprite.__init__(self)
 
@@ -166,8 +166,8 @@ passPile = False
 
 # Groups and group settings
 playerGroup = pygame.sprite.Group()
-leafGroup = pygame.sprite.Group()
-lastLeaf = pygame.time.get_ticks() - SPAWN_INTERVAL
+rockGroup = pygame.sprite.Group()
+lastrock = pygame.time.get_ticks() - SPAWN_INTERVAL
 player = Gimble(int(SCREEN_WIDTH/4), int(SCREEN_HEIGHT/2))
 playerGroup.add(player)
 restartButton = Button((SCREEN_WIDTH/2) - 250, 125, button)
@@ -184,26 +184,26 @@ while running:
     playerGroup.draw(SCREEN)
     playerGroup.update()
 
-    leafGroup.draw(SCREEN)
+    rockGroup.draw(SCREEN)
 
     # Scrolls ground
     SCREEN.blit(fg, (baseScroll, (SCREEN_HEIGHT - 200)))
 
     # Checks if player sprite passes through obstacles
-    if len(leafGroup) > 0:
-        if playerGroup.sprites()[0].rect.left > leafGroup.sprites()[0].rect.left\
-            and playerGroup.sprites()[0].rect.left < leafGroup.sprites()[0].rect.right\
+    if len(rockGroup) > 0:
+        if playerGroup.sprites()[0].rect.left > rockGroup.sprites()[0].rect.left\
+            and playerGroup.sprites()[0].rect.left < rockGroup.sprites()[0].rect.right\
                 and passPile == False:
                 passPile = True
         if passPile == True:
-            if playerGroup.sprites()[0].rect.left > leafGroup.sprites()[0].rect.right:
+            if playerGroup.sprites()[0].rect.left > rockGroup.sprites()[0].rect.right:
                 score += 1
                 passPile = False
 
     drawText(str(score), typeface, color, int(SCREEN_WIDTH/2) - 25, 25)
 
     # Checks if player and obstacles collide
-    if pygame.sprite.groupcollide(playerGroup, leafGroup, False, False) or player.rect.top < 0:
+    if pygame.sprite.groupcollide(playerGroup, rockGroup, False, False) or player.rect.top < 0:
         gameOver = True
 
     # Checks if player collides w/ ground
@@ -214,20 +214,20 @@ while running:
     # Generates new obstacles while running
     if gameOver == False and flying == True:
         timeNow = pygame.time.get_ticks()
-        if timeNow - lastLeaf > SPAWN_INTERVAL:
-            leafHeight = random.randint(-350, 150)
-            bottomLeaf = Leaves(SCREEN_WIDTH, int(SCREEN_HEIGHT/2) + leafHeight, -1)
-            topLeaf = Leaves(SCREEN_WIDTH, int(SCREEN_HEIGHT/2) + leafHeight, 1)
-            leafGroup.add(bottomLeaf)
-            leafGroup.add(topLeaf)
-            lastLeaf = timeNow
+        if timeNow - lastrock > SPAWN_INTERVAL:
+            rockHeight = random.randint(-350, 150)
+            bottomrock = Stalagmites(SCREEN_WIDTH, int(SCREEN_HEIGHT/2) + rockHeight, -1)
+            toprock = Stalagmites(SCREEN_WIDTH, int(SCREEN_HEIGHT/2) + rockHeight, 1)
+            rockGroup.add(bottomrock)
+            rockGroup.add(toprock)
+            lastrock = timeNow
 
         # Scrolls ground while running
         baseScroll -= scrollSpeed
         if abs(baseScroll) > 1920:
             baseScroll = 0
 
-        leafGroup.update()
+        rockGroup.update()
 
     # Draws restart button when gameover; resets game if clicked
     if gameOver == True:
